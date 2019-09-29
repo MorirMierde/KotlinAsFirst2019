@@ -123,15 +123,15 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    if(list.isEmpty())return 0.0
+    if (list.isEmpty()) return 0.0
     var sum: Double = 0.0
     var count: Double = 0.0
     var result: Double
-    for(iter in list){
-        sum+=iter
+    for (iter in list) {
+        sum += iter
         count++
     }
-    result = sum/count
+    result = sum / count
     return result
 }
 
@@ -175,19 +175,19 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    if (list.isEmpty())return list
+    if (list.isEmpty()) return list
     var numbers: MutableList<Int> = mutableListOf()
     var count: Int = 0
-    for(iter1 in list.indices){
+    for (iter1 in list.indices) {
         var summ: Int = 0
-        for (iter2 in list.indices){
-            if(iter1 >= iter2){
+        for (iter2 in list.indices) {
+            if (iter1 >= iter2) {
                 summ += list[iter2]
             }
         }
         numbers.add(summ)
     }
-    for (i in list.indices){
+    for (i in list.indices) {
         list.set(i, numbers[i])
     }
     return list
@@ -268,11 +268,11 @@ fun roman(n: Int): String = TODO()
 
 /**
  * Очень сложная
-*
-* Записать заданное натуральное число 1..999999 прописью по-русски.
-* Например, 375 = "триста семьдесят пять",
-* 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
-*/
+ *
+ * Записать заданное натуральное число 1..999999 прописью по-русски.
+ * Например, 375 = "триста семьдесят пять",
+ * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
+ */
 fun russian(n: Int): String {
     var words: String = ""
     var flag: Boolean = false
@@ -281,52 +281,91 @@ fun russian(n: Int): String {
     var buf1: Int = 0
     var buf2: Int = 0
     var buf3: Int = 0
-    val map1: List<String> = listOf("сто ", "двести ","триста ","четыреста ","пятьсот ","шестьсот ","семьсот ","восемьсот ","девятьсот ")
-    val map2: List<String> = listOf("десять ", "двадцать ","тридцать ","сорок ","пятьдесят ","шестьдесят ","семьдесят ","восемьдесят ","девяносто ")
-    val map3: List<String> = listOf("один", "два","три","четыре","пять","шесть","семь","восемь","девять")
-    val map4: List<String> = listOf("одинадцать ", "двенадцать ","тринадцать ","четырнадцать ","пятнадцать ","шестнадцать ","семнадцать ","восемнадцать ","девятнадцать ")
-    val map5: List<String> = listOf("одна тысяча ", "две тысячи ","три тысячи ","четыре тысячи ","пять тысяч ","шесть тысяч ","семь тысяч ","восемь тысяч ","девять тысяч ")
+    val map1: List<String> = listOf(
+        "сто ",
+        "двести ",
+        "триста ",
+        "четыреста ",
+        "пятьсот ",
+        "шестьсот ",
+        "семьсот ",
+        "восемьсот ",
+        "девятьсот "
+    )
+    val map2: List<String> = listOf(
+        "десять ",
+        "двадцать ",
+        "тридцать ",
+        "сорок ",
+        "пятьдесят ",
+        "шестьдесят ",
+        "семьдесят ",
+        "восемьдесят ",
+        "девяносто "
+    )
+    val map3: List<String> = listOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val map4: List<String> = listOf(
+        "одинадцать ",
+        "двенадцать ",
+        "тринадцать ",
+        "четырнадцать ",
+        "пятнадцать ",
+        "шестнадцать ",
+        "семнадцать ",
+        "восемнадцать ",
+        "девятнадцать "
+    )
+    val map5: List<String> = listOf(
+        "одна тысяча ",
+        "две тысячи ",
+        "три тысячи ",
+        "четыре тысячи ",
+        "пять тысяч ",
+        "шесть тысяч ",
+        "семь тысяч ",
+        "восемь тысяч ",
+        "девять тысяч "
+    )
     hundred = n
-    if(n/1000 > 0){
-        thousand = n/1000
-        if(thousand/100 > 0){
-            buf1 = thousand/100
-            words+=map1.get(buf1-1)
-            if (thousand%100 == 0)words+= "тысяч "
+    if (n / 1000 > 0) {
+        thousand = n / 1000
+        if (thousand / 100 > 0) {
+            buf1 = thousand / 100
+            words += map1.get(buf1 - 1)
+            if (thousand % 100 == 0) words += "тысяч "
         }
-        if ((thousand%100>10)&&(thousand%100<20)){
-            words+=map4.get(n%10) + "тысяч "
+        if ((thousand % 100 > 10) && (thousand % 100 < 20)) {
+            words += map4.get(n % 10) + "тысяч "
             flag = true
+        } else if ((thousand - buf1 * 100 - thousand % 10) / 10 > 0) {
+            buf2 = (thousand - buf1 * 100 - thousand % 10) / 10
+            words += map2.get(buf2 - 1)
+            if (thousand % 10 == 0) words += "тысяч "
         }
-        else if((thousand - buf1*100 - thousand%10)/10 > 0){
-            buf2 = (thousand - buf1*100 - thousand%10)/10
-            words+=map2.get(buf2-1)
-            if(thousand%10 == 0)words+= "тысяч "
+        if ((thousand % 10 > 0) && (flag == false)) {
+            buf3 = thousand % 10
+            words += map5.get(buf3 - 1)
         }
-        if((thousand%10 > 0)&&(flag==false)){
-            buf3 = thousand%10
-            words+=map5.get(buf3-1)
-        }
-        hundred = n%1000
+        hundred = n % 1000
     }
     flag = false
-    if(hundred/100 > 0){
-        buf1 = hundred/100
-        words+=map1.get(buf1-1)
+    if (hundred / 100 > 0) {
+        buf1 = hundred / 100
+        words += map1.get(buf1 - 1)
     }
-    if ((hundred%100>10)&&(hundred%100<20)){
-        words+=map4.get(hundred%10-1)
+    if ((hundred % 100 > 10) && (hundred % 100 < 20)) {
+        words += map4.get(hundred % 10 - 1)
         flag = true
     }
-    if(((hundred - buf1*100 - hundred%10)/10 > 0)&&(flag==false)){
-        buf2 = (hundred - buf1*100 - hundred%10)/10
-        words+=map2.get(buf2-1)
+    if (((hundred - buf1 * 100 - hundred % 10) / 10 > 0) && (flag == false)) {
+        buf2 = (hundred - buf1 * 100 - hundred % 10) / 10
+        words += map2.get(buf2 - 1)
     }
-    if((hundred%10 > 0)&&(flag==false)){
-        buf3 = hundred%10
-        words+=map3.get(buf3-1)
+    if ((hundred % 10 > 0) && (flag == false)) {
+        buf3 = hundred % 10
+        words += map3.get(buf3 - 1)
     }
-    if(words.last()==' '){
+    if (words.last() == ' ') {
         words = words.dropLast(1)
     }
     return words

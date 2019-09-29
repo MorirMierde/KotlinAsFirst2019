@@ -73,7 +73,7 @@ fun digitNumber(n: Int): Int {
     var number: String
     var count: Int = 0
     number = n.toString()
-    for(i in number){
+    for (i in number) {
         count++
     }
     return count
@@ -90,9 +90,9 @@ fun fib(n: Int): Int {
     var fnum2 = 1
     var fnumsum = 1
     var iter = 0
-    while (iter < n-2){
+    while (iter < n - 2) {
         fnumsum = fnum1 + fnum2
-        fnum1=fnum2
+        fnum1 = fnum2
         fnum2 = fnumsum
         iter++
     }
@@ -212,14 +212,14 @@ fun hasDifferentDigits(n: Int): Boolean {
     var result: Boolean = false
     var buf: Int
     var number: MutableList<Int> = mutableListOf()
-    if(n==0)number.add(inputnumper)
-    while (inputnumper>0){
-        number.add(inputnumper%10)
-        inputnumper = inputnumper/10
+    if (n == 0) number.add(inputnumper)
+    while (inputnumper > 0) {
+        number.add(inputnumper % 10)
+        inputnumper = inputnumper / 10
     }
     buf = number.get(0)
-    for(iter in number.indices){
-        if(number[iter]!=buf)result=true
+    for (iter in number.indices) {
+        if (number[iter] != buf) result = true
         buf = number[iter]
     }
     println(number)
@@ -266,21 +266,19 @@ fun fibSequenceDigit(n: Int): Int {
             for (iter in buf) {
                 count++
             }
-            buf1 = fnum2 / pow(const.toDouble(), count.toDouble()-1)
+            buf1 = fnum2 / pow(const.toDouble(), count.toDouble() - 1)
             number.add(buf1.toInt())
             while (count != 1) {
                 //number.add(buf1.toInt())
-                buf1 = (fnum2%pow(const.toDouble(), count.toDouble()-1))%pow(const.toDouble(), count.toDouble())
+                buf1 = (fnum2 % pow(const.toDouble(), count.toDouble() - 1)) % pow(const.toDouble(), count.toDouble())
                 number.add(buf1.toInt())
-                println(buf1)
-                println("***********")
                 count--
             }
             iter++
         }
     }
-    for(iter in number.indices){
-        if(iter+1 == n) result = number.get(iter)
+    for (iter in number.indices) {
+        if (iter + 1 == n) result = number.get(iter)
     }
     println(number)
     return result

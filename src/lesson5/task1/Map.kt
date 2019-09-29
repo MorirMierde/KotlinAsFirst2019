@@ -282,7 +282,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
     var buffer: Set<String> = setOf()
     var allfriendslist: Set<String> = setOf()
     friends.forEach {
-        allfriendslist+= it.value
+        allfriendslist += it.value
     }
     for (iter1 in result) {
         for (iter2 in friends) {
@@ -294,7 +294,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
         }
     }
     friends.forEach {
-        if (allfriendslist.contains(it.key))allfriendslist = allfriendslist.minus(it.key)
+        if (allfriendslist.contains(it.key)) allfriendslist = allfriendslist.minus(it.key)
     }
     allfriendslist.forEach {
         result.put(it, emptySet())
