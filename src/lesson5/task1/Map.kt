@@ -2,6 +2,9 @@
 
 package lesson5.task1
 
+import ru.spbstu.kotlin.generate.assume.retry
+import ru.spbstu.wheels.sorted
+
 /**
  * Пример
  *
@@ -119,7 +122,23 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
+    println(a)
+    println(b)
+    var elementforremove = mutableListOf<String>()
+    b.forEach {
+        for (iter2 in a) {
+            if (it == iter2) {
+                elementforremove.add(iter2.key)
+
+            }
+        }
+    }
+    for (iter1 in elementforremove) {
+        a.remove(iter1)
+    }
+    return
+}
 
 /**
  * Простая
@@ -212,7 +231,27 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var result: Boolean = false
+    words.forEach {
+        var buffer = arrayListOf<Char>()
+        it.forEach { char -> buffer.add(char) }
+        for (iter in words) {
+            if (it != iter) {
+                var flag: Boolean = false
+                for (iter1 in buffer) {
+                    if (!iter.contains(iter1)) {
+                        flag = true
+                    }
+                }
+                if ((flag == false) && (it.length == iter.length)) {
+                    result = true
+                }
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -238,7 +277,30 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    var result: MutableMap<String, Set<String>> = friends.toMutableMap()
+    var buffer: Set<String> = setOf()
+    var allfriendslist: Set<String> = setOf()
+    friends.forEach {
+        allfriendslist+= it.value
+    }
+    for (iter1 in result) {
+        for (iter2 in friends) {
+            if ((iter1 != iter2) && (iter1.value.contains(iter2.key))) {
+                buffer = iter2.value
+                buffer = buffer.minus(iter1.key)
+                iter1.setValue(buffer.plus(iter1.value))
+            }
+        }
+    }
+    friends.forEach {
+        if (allfriendslist.contains(it.key))allfriendslist = allfriendslist.minus(it.key)
+    }
+    allfriendslist.forEach {
+        result.put(it, emptySet())
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -257,7 +319,19 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var result: Pair<Int, Int> = -1 to -1
+    var flag: Boolean = false
+    if (list.isEmpty()) return result
+    for (iter1 in list.indices) {
+        for (iter2 in list.indices) {
+            if ((iter1 != iter2) && (number == list.get(iter1) + list.get(iter2))) {
+                result = iter1 to iter2
+            }
+        }
+    }
+    return result.sorted()
+}
 
 /**
  * Очень сложная

@@ -70,7 +70,9 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    var result = File(inputName).bufferedWriter()
+    var text = File(inputName).forEachLine { println(it) }
+
 }
 
 /**

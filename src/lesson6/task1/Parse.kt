@@ -133,7 +133,41 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var expression = expression.split(' ')
+    var symbol: List<Char> = listOf(' ', '+', '-')
+    var amount: Int = 0
+    symbol.forEach {
+        if ((expression.get(0).toInt() < 0) || (expression.get(0).contains(it))) throw IllegalArgumentException()
+        else {
+            amount = expression.first().toInt()
+        }
+    }
+    var buffer: Int = 0
+    var sym: String = ""
+    var flag: Boolean = false
+    var query: Boolean = true
+    expression.forEach {
+        if (!flag) {
+            flag = true
+            return@forEach
+        }
+        if (!it.equals('+') && !it.equals('-') && query == false) {
+            if (query == true) throw IllegalArgumentException()
+            buffer = it.toInt()
+            if (buffer < 0) return throw IllegalArgumentException()
+            if (sym == "+") amount += buffer
+            if (sym == "-") amount -= buffer
+            query = true
+        } else {
+
+            sym = it
+            query = false
+        }
+
+    }
+    return amount
+}
 
 /**
  * Сложная
@@ -157,7 +191,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var result: String = ""
+    var menu: MutableList<List<String>> = mutableListOf()
+    var max: Double = 0.0
+    var items = description.split("; ")
+    if (items.isEmpty()) items = listOf(description)
+    items.forEach {
+        var buffer = it.split(' ')
+        menu.add(buffer)
+    }
+    menu.forEach {
+        var price = it.last().toDoubleOrNull()
+        if ((price != null) && (price!! > max)) {
+            max = price
+            result = it.first()
+        }
+    }
+    return result
+}
 
 /**
  * Сложная

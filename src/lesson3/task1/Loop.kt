@@ -2,7 +2,9 @@
 
 package lesson3.task1
 
+import java.lang.Math.pow
 import kotlin.math.sqrt
+import kotlin.math.pow
 
 /**
  * Пример
@@ -67,7 +69,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var number: String
+    var count: Int = 0
+    number = n.toString()
+    for(i in number){
+        count++
+    }
+    return count
+}
 
 /**
  * Простая
@@ -75,7 +85,19 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fnum1 = 1
+    var fnum2 = 1
+    var fnumsum = 1
+    var iter = 0
+    while (iter < n-2){
+        fnumsum = fnum1 + fnum2
+        fnum1=fnum2
+        fnum2 = fnumsum
+        iter++
+    }
+    return fnumsum
+}
 
 /**
  * Простая
@@ -185,7 +207,24 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var inputnumper = n
+    var result: Boolean = false
+    var buf: Int
+    var number: MutableList<Int> = mutableListOf()
+    if(n==0)number.add(inputnumper)
+    while (inputnumper>0){
+        number.add(inputnumper%10)
+        inputnumper = inputnumper/10
+    }
+    buf = number.get(0)
+    for(iter in number.indices){
+        if(number[iter]!=buf)result=true
+        buf = number[iter]
+    }
+    println(number)
+    return result
+}
 
 /**
  * Сложная
@@ -207,4 +246,42 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var result: Int = 0
+    var number: MutableList<Int> = mutableListOf(1, 1)
+    var fnum1 = 1
+    var fnum2 = 1
+    var fnumsum = 1
+    var iter = 0
+    while (iter < n) {
+        fnumsum = fnum1 + fnum2
+        fnum1 = fnum2
+        fnum2 = fnumsum
+        if (fnum2 < 10) number.add(fnum2)
+        else {
+            var buf = fnum2.toString()
+            var buf1: Double
+            var count: Int = 0
+            var const: Int = 10
+            for (iter in buf) {
+                count++
+            }
+            buf1 = fnum2 / pow(const.toDouble(), count.toDouble()-1)
+            number.add(buf1.toInt())
+            while (count != 1) {
+                //number.add(buf1.toInt())
+                buf1 = (fnum2%pow(const.toDouble(), count.toDouble()-1))%pow(const.toDouble(), count.toDouble())
+                number.add(buf1.toInt())
+                println(buf1)
+                println("***********")
+                count--
+            }
+            iter++
+        }
+    }
+    for(iter in number.indices){
+        if(iter+1 == n) result = number.get(iter)
+    }
+    println(number)
+    return result
+}
