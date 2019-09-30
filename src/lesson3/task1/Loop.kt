@@ -71,14 +71,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var number: String = n.toString()
-    var count: Int = 0
-    for (i in number) {
+    var buffer = n
+    var count: Int = 1
+    while ((buffer / 10) > 0) {
+        buffer /= 10
         count++
     }
     if (n < 0) count--
     return count
-
 }
 
 /**
@@ -213,7 +213,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var inputnumper = n
     var result: Boolean = false
     var buf: Int
-    var number: MutableList<Int> = mutableListOf()
+    val number: MutableList<Int> = mutableListOf()
     if (n == 0) number.add(inputnumper)
     while (inputnumper > 0) {
         number.add(inputnumper % 10)
@@ -250,31 +250,32 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  */
 
 fun fibSequenceDigit(n: Int): Int {
-    var result: Int = 0
+    var result = 0
     var number: MutableList<Int> = mutableListOf(1, 1)
     var fnum1 = 1
     var fnum2 = 1
     var fnumsum: Int
-    var buffer1: String
+    var buffer1: Int
     var buffer2: Int
     var buffer3: Int
     for (i in 0..n) {
         fnumsum = fnum1 + fnum2
         fnum1 = fnum2
         fnum2 = fnumsum
-        var count = 0
-        buffer1 = fnumsum.toString()
-        for (i in buffer1) {
+        var count = 1
+        buffer1 = fnumsum
+        while ((buffer1 / 10) > 0) {
+            buffer1 /= 10
             count++
         }
-        if (count==1){
+        if (count == 1) {
             number.add(fnumsum)
-        }else{
+        } else {
             buffer2 = fnumsum
-            while (count>0){
+            while (count > 0) {
                 buffer3 = (buffer2 / 10.0.pow((count - 1).toDouble())).toInt()
                 number.add(buffer3)
-                buffer2 = (buffer2 - buffer3* pow(10.0, (count - 1).toDouble())).roundToInt()
+                buffer2 = (buffer2 - buffer3 * pow(10.0, (count - 1).toDouble())).roundToInt()
                 count--
             }
         }

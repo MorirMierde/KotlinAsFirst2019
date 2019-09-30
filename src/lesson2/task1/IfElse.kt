@@ -90,18 +90,16 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    var result: Double
-    var halflenght: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    val halflenght: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     if (t1 * v1 > halflenght) {
-        result = (halflenght / v1)
+        return (halflenght / v1)
     } else if (t3 * v3 > halflenght) {
         var lenght: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2 - t1 * v1 - t2 * v2
-        result = t1 + t2 + lenght / v3
+        return t1 + t2 + lenght / v3
     } else {
         var lenght: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2 - t1 * v1
-        result = t1 + lenght / v2
+        return t1 + lenght / v2
     }
-    return result
 }
 
 /**
@@ -118,12 +116,10 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    var result: Int
-    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) result = 3
-    else if (kingX == rookX2 || kingY == rookY2) result = 2
-    else if (kingX == rookX1 || kingY == rookY1) result = 1
-    else result = 0
-    return result
+    if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) return 3
+    else if (kingX == rookX2 || kingY == rookY2) return 2
+    else if (kingX == rookX1 || kingY == rookY1) return 1
+    return 0
 }
 
 /**
@@ -141,12 +137,10 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    var result: Int
-    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) result = 3
-    else if (abs(kingX - bishopX) == abs(kingY - bishopY)) result = 2
-    else if (kingX == rookX || kingY == rookY) result = 1
-    else result = 0
-    return result
+    if ((kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY))) return 3
+    else if (abs(kingX - bishopX) == abs(kingY - bishopY)) return 2
+    else if (kingX == rookX || kingY == rookY) return 1
+    return 0
 }
 
 /**

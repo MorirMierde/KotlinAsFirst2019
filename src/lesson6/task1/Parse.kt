@@ -137,24 +137,24 @@ fun plusMinus(expression: String): Int {
     if (expression.isEmpty()) IllegalArgumentException()
     var expression = expression.split(' ')
     var symbol: List<Char> = listOf(' ', '+', '-')
-    var amount: Int = 0
+    var amount = 0
     symbol.forEach {
         if ((expression.get(0).toInt() < 0) || (expression.get(0).contains(it))) throw IllegalArgumentException()
         else {
             amount = expression.first().toInt()
         }
     }
-    var buffer: Int = 0
-    var sym: String = ""
-    var flag: Boolean = false
-    var query: Boolean = true
+    var buffer = 0
+    var sym = ""
+    var flag = false
+    var query = true
     expression.forEach {
         if (!flag) {
             flag = true
             return@forEach
         }
-        if (!it.equals('+') && !it.equals('-') && query == false) {
-            if (query == true) throw IllegalArgumentException()
+        if (!it.equals('+') && !it.equals('-') && !query) {
+            require(!query)
             buffer = it.toInt()
             if (buffer < 0) return throw IllegalArgumentException()
             if (sym == "+") amount += buffer
