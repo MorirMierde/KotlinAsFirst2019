@@ -134,6 +134,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
+    if (expression.isEmpty()) IllegalArgumentException()
     var expression = expression.split(' ')
     var symbol: List<Char> = listOf(' ', '+', '-')
     var amount: Int = 0
