@@ -335,7 +335,8 @@ fun russian(n: Int): String {
             if (thousand % 100 == 0) words += "тысяч "
         }
         if ((thousand % 100 > 10) && (thousand % 100 < 20)) {
-            words += map4.get(n % 10) + "тысяч "
+            println()
+            words += map4.get(n % 10-1) + "тысяч "
             flag = true
         } else if ((thousand - buf1 * 100 - thousand % 10) / 10 > 0) {
             buf2 = (thousand - buf1 * 100 - thousand % 10) / 10
@@ -358,8 +359,12 @@ fun russian(n: Int): String {
         flag = true
     }
     if (((hundred - buf1 * 100 - hundred % 10) / 10 > 0) && (flag == false)) {
+        println("*")
         buf2 = (hundred - buf1 * 100 - hundred % 10) / 10
         words += map2.get(buf2 - 1)
+    }else if (hundred<100 && hundred>=20){
+        buf2 = hundred/10
+        words+= map2.get(buf2 - 1)
     }
     if ((hundred % 10 > 0) && (flag == false)) {
         buf3 = hundred % 10

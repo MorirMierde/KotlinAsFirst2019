@@ -48,13 +48,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  */
 fun daysInMonth(month: Int, year: Int): Int {
     val months = arrayOf<Int>(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-    var flag: Boolean = false
-    var result: Int = 0
+    var flag = false
     if (year % 4 == 0) flag = true
     if (year % 100 == 0) flag = false
     if (year % 400 == 0) flag = true
     if ((flag) && (month == 2)) return 29
-    else return months.get(month - 1)
+    else return months.get(month-1)
 }
 
 /**
