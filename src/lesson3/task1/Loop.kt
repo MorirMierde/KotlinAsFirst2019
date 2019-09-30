@@ -5,6 +5,7 @@ package lesson3.task1
 import java.lang.Math.pow
 import kotlin.math.sqrt
 import kotlin.math.pow
+import kotlin.math.roundToInt
 
 /**
  * Пример
@@ -70,13 +71,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var number: String
+    var number: String = n.toString()
     var count: Int = 0
-    number = n.toString()
     for (i in number) {
         count++
     }
+    if (n < 0) count--
     return count
+
 }
 
 /**
@@ -246,40 +248,39 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+
 fun fibSequenceDigit(n: Int): Int {
     var result: Int = 0
     var number: MutableList<Int> = mutableListOf(1, 1)
     var fnum1 = 1
     var fnum2 = 1
-    var fnumsum = 1
-    var iter = 0
-    while (iter < n) {
+    var fnumsum: Int
+    var buffer1: String
+    var buffer2: Int
+    var buffer3: Int
+    for (i in 0..n) {
         fnumsum = fnum1 + fnum2
         fnum1 = fnum2
         fnum2 = fnumsum
-        if (fnum2 < 10) number.add(fnum2)
-        else {
-            var buf = fnum2.toString()
-            var buf1: Double
-            var count: Int = 0
-            var const: Int = 10
-            for (iter in buf) {
-                count++
-            }
-            buf1 = fnum2 / pow(const.toDouble(), count.toDouble() - 1)
-            number.add(buf1.toInt())
-            while (count != 1) {
-                //number.add(buf1.toInt())
-                buf1 = (fnum2 % pow(const.toDouble(), count.toDouble() - 1)) % pow(const.toDouble(), count.toDouble())
-                number.add(buf1.toInt())
+        var count = 0
+        buffer1 = fnumsum.toString()
+        for (i in buffer1) {
+            count++
+        }
+        if (count==1){
+            number.add(fnumsum)
+        }else{
+            buffer2 = fnumsum
+            while (count>0){
+                buffer3 = (buffer2 / 10.0.pow((count - 1).toDouble())).toInt()
+                number.add(buffer3)
+                buffer2 = (buffer2 - buffer3* pow(10.0, (count - 1).toDouble())).roundToInt()
                 count--
             }
-            iter++
         }
     }
     for (iter in number.indices) {
         if (iter + 1 == n) result = number.get(iter)
     }
-    println(number)
     return result
 }
