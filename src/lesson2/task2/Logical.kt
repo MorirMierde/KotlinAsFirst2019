@@ -52,8 +52,8 @@ fun daysInMonth(month: Int, year: Int): Int {
     if (year % 4 == 0) flag = true
     if (year % 100 == 0) flag = false
     if (year % 400 == 0) flag = true
-    if ((flag) && (month == 2)) return 29
-    else return months[month - 1]
+    return if ((flag) && (month == 2)) 29
+    else months[month - 1]
 }
 
 /**
