@@ -223,10 +223,10 @@ fun factorize(n: Int): List<Int> {
     var number = n
     var factor = 2
     while (factor <= number) {
-        if (number % factor === 0) {//если делится нацело
+        if (number % factor == 0) {//если делится нацело
             number /= factor
             result.add(factor)
-            factor = 2
+            factor = 1
         }
         factor++
     }
@@ -254,7 +254,7 @@ fun factorizeToString(n: Int): String {
         if (number % factor === 0) {//если делится нацело
             number /= factor
             buffer.add(factor)
-            factor = 2
+            factor = 1
         }
         factor++
     }
