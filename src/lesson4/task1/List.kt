@@ -423,23 +423,23 @@ fun russian(n: Int): String {
     flag = false
     if (hundred / 100 > 0) {
         buf1 = hundred / 100
-        words += map1.get(buf1 - 1)
+        words += map1[buf1 - 1]
     }
     if ((hundred % 100 > 10) && (hundred % 100 < 20)) {
-        words += map4.get(hundred % 10 - 1)
+        words += map4[hundred % 10 - 1]
         flag = true
     }
-    if (((hundred - buf1 * 100 - hundred % 10) / 10 > 0) && (flag == false)) {
+    if (((hundred - buf1 * 100 - hundred % 10) / 10 > 0) && !flag) {
         println("*")
         buf2 = (hundred - buf1 * 100 - hundred % 10) / 10
-        words += map2.get(buf2 - 1)
-    } else if (hundred < 100 && hundred >= 20) {
+        words += map2[buf2 - 1]
+    } else if (hundred in 20..99) {
         buf2 = hundred / 10
-        words += map2.get(buf2 - 1)
+        words += map2[buf2 - 1]
     }
-    if ((hundred % 10 > 0) && (flag == false)) {
+    if ((hundred % 10 > 0) && !flag) {
         buf3 = hundred % 10
-        words += map3.get(buf3 - 1)
+        words += map3[buf3 - 1]
     }
     if (words.last() == ' ') {
         words = words.dropLast(1)
