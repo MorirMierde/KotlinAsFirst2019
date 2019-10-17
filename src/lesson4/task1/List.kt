@@ -3,6 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.Math.pow
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -124,8 +126,8 @@ fun abs(v: List<Double>): Double = TODO()
  */
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) return 0.0
-    var sum: Double = 0.0
-    var count: Double = 0.0
+    var sum = 0.0
+    var count = 0.0
     var result: Double
     for (iter in list) {
         sum += iter
@@ -162,7 +164,23 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var result = 0
+    var power = 1
+    var flag = true
+    println(p)
+    println(x)
+    p.forEach {
+        if (flag) {
+            flag = false
+            result += it
+            return@forEach
+        }
+        result += it * (x.toDouble().pow(power.toDouble())).toInt()
+        power++
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -176,10 +194,10 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
     if (list.isEmpty()) return list
-    var numbers: MutableList<Int> = mutableListOf()
-    var count: Int = 0
+    val numbers: MutableList<Int> = mutableListOf()
+    //var count: Int = 0
     for (iter1 in list.indices) {
-        var summ: Int = 0
+        var summ = 0
         for (iter2 in list.indices) {
             if (iter1 >= iter2) {
                 summ += list[iter2]
@@ -188,7 +206,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
         numbers.add(summ)
     }
     for (i in list.indices) {
-        list.set(i, numbers[i])
+        list[i] = numbers[i]
     }
     return list
 }
@@ -200,7 +218,22 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val result = mutableListOf<Int>()
+    var number = n
+    var factor = 2
+    while (factor <= number) {
+        if (number % factor === 0) {//если делится нацело
+            number /= factor
+            result.add(factor)
+            factor = 2
+        }
+        factor++
+    }
+    result.sort()
+    result.toList()
+    return result
+}
 
 /**
  * Сложная
@@ -209,7 +242,34 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    val buffer = mutableListOf<Int>()
+    println(n)
+    var number = n
+    var factor = 2
+    var result = ""
+    var flag = true
+
+    while (factor <= number) {
+        if (number % factor === 0) {//если делится нацело
+            number /= factor
+            buffer.add(factor)
+            factor = 2
+        }
+        factor++
+    }
+    buffer.sort()
+    buffer.forEach {
+        if (flag) {
+            result += it.toString()
+            flag = false
+            return@forEach
+        }
+        result += "*"
+        result += it.toString()
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -240,7 +300,18 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    val buffer = digits.toMutableList()
+    buffer.reverse()
+//    var balance = 0
+    var power = 0
+    var result = 0
+    buffer.forEach {
+        result += it * (base.toDouble().pow(power.toDouble())).toInt()
+        power++
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -274,13 +345,13 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var words: String = ""
-    var flag: Boolean = false
-    var thousand: Int = 0
-    var hundred: Int = 0
-    var buf1: Int = 0
-    var buf2: Int = 0
-    var buf3: Int = 0
+    var words = ""
+    var flag = false
+    var thousand = 0
+    var hundred = 0
+    var buf1 = 0
+    var buf2 = 0
+    var buf3 = 0
     val map1: List<String> = listOf(
         "сто ",
         "двести ",
@@ -336,7 +407,7 @@ fun russian(n: Int): String {
         }
         if ((thousand % 100 > 10) && (thousand % 100 < 20)) {
             println()
-            words += map4.get(n % 10-1) + "тысяч "
+            words += map4.get(n % 10 - 1) + "тысяч "
             flag = true
         } else if ((thousand - buf1 * 100 - thousand % 10) / 10 > 0) {
             buf2 = (thousand - buf1 * 100 - thousand % 10) / 10
@@ -362,9 +433,9 @@ fun russian(n: Int): String {
         println("*")
         buf2 = (hundred - buf1 * 100 - hundred % 10) / 10
         words += map2.get(buf2 - 1)
-    }else if (hundred<100 && hundred>=20){
-        buf2 = hundred/10
-        words+= map2.get(buf2 - 1)
+    } else if (hundred < 100 && hundred >= 20) {
+        buf2 = hundred / 10
+        words += map2.get(buf2 - 1)
     }
     if ((hundred % 10 > 0) && (flag == false)) {
         buf3 = hundred % 10
