@@ -22,10 +22,10 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean {
-    var buf1 = number / 1000
-    var buf2 = (number - buf1 * 1000) / 100
-    var buf3 = (number - buf1 * 1000 - buf2 * 100) / 10
-    var buf4 = number - buf1 * 1000 - buf2 * 100 - buf3 * 10
+    val buf1 = number / 1000
+    val buf2 = (number - buf1 * 1000) / 100
+    val buf3 = (number - buf1 * 1000 - buf2 * 100) / 10
+    val buf4 = number - buf1 * 1000 - buf2 * 100 - buf3 * 10
     return buf1 + buf2 == buf3 + buf4
 }
 
@@ -78,14 +78,13 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    var flag: Boolean = false
-    val min1: Int = minOf(a, b, c)
-    var min2: Int = 0
+    val min1 = minOf(a, b, c)
+    var min2 = 0
     when (min1) {
         a -> min2 = minOf(b, c)
         b -> min2 = minOf(a, c)
         c -> min2 = minOf(a, b)
     }
-    if ((min1 <= r) && (min2 <= s) || (min2 <= r) && (min1 <= s)) flag = true
-    return flag
+    if ((min1 <= r) && (min2 <= s) || (min2 <= r) && (min1 <= s)) return true
+    return false
 }

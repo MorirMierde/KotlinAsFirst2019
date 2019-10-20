@@ -72,12 +72,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var buffer = n
-    var count: Int = 1
+    var count = 1
     while ((buffer / 10) > 0) {
         buffer /= 10
         count++
     }
-    if (n < 0) count--
     return count
 }
 
@@ -210,22 +209,18 @@ fun isPalindrome(n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var inputnumper = n
-    var result: Boolean = false
-    var buf: Int
-    val number: MutableList<Int> = mutableListOf()
-    if (n == 0) number.add(inputnumper)
-    while (inputnumper > 0) {
-        number.add(inputnumper % 10)
-        inputnumper = inputnumper / 10
+    var input = n
+    var buf1 = input
+    var buf2: Int
+    while (buf1 / 10 != 0) buf1 /= 10
+    while (input > 0) {
+        buf2 = input % 10
+        if (buf2 != buf1) {
+            return true
+        }
+        input /= 10
     }
-    buf = number.get(0)
-    for (iter in number.indices) {
-        if (number[iter] != buf) result = true
-        buf = number[iter]
-    }
-    println(number)
-    return result
+    return false
 }
 
 /**
@@ -251,7 +246,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()
 
 fun fibSequenceDigit(n: Int): Int {
     var result = 0
-    var number: MutableList<Int> = mutableListOf(1, 1)
+    val number: MutableList<Int> = mutableListOf(1, 1)
     var fnum1 = 1
     var fnum2 = 1
     var fnumsum: Int
@@ -275,13 +270,13 @@ fun fibSequenceDigit(n: Int): Int {
             while (count > 0) {
                 buffer3 = (buffer2 / 10.0.pow((count - 1).toDouble())).toInt()
                 number.add(buffer3)
-                buffer2 = (buffer2 - buffer3 * pow(10.0, (count - 1).toDouble())).roundToInt()
+                buffer2 = (buffer2 - buffer3 * 10.0.pow((count - 1).toDouble())).roundToInt()
                 count--
             }
         }
     }
     for (iter in number.indices) {
-        if (iter + 1 == n) result = number.get(iter)
+        if (iter + 1 == n) result = number[iter]
     }
     return result
 }
