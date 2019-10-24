@@ -3,10 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -94,11 +91,11 @@ fun timeForHalfWay(
     return when {
         t1 * v1 > halflenght -> halflenght / v1
         t3 * v3 > halflenght -> {
-            val length: Double = halflenght - t1 * v1 - t2 * v2
+            val length = halflenght - t1 * v1 - t2 * v2
             t1 + t2 + length / v3
         }
         else -> {
-            val length: Double = halflenght - t1 * v1
+            val length = halflenght - t1 * v1
             t1 + length / v2
         }
     }
@@ -153,14 +150,12 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return if (a + b < c || a + c < b || b + c < a) {
-        -1
-    } else {
-        if ((a.pow(2) == b.pow(2) + c.pow(2)) || (b.pow(2) == a.pow(2) + c.pow(2)) || (c.pow(2) == b.pow(2) + a.pow(2))) 1
-        else if ((a.pow(2) > b.pow(2) + c.pow(2)) || (b.pow(2) > a.pow(2) + c.pow(2)) || (c.pow(2) > b.pow(2) + a.pow(2))) 2
-        else 0
-    }
+fun triangleKind(a: Double, b: Double, c: Double): Int = if (a + b < c || a + c < b || b + c < a) {
+    -1
+} else {
+    if ((a.pow(2) == b.pow(2) + c.pow(2)) || (b.pow(2) == a.pow(2) + c.pow(2)) || (c.pow(2) == b.pow(2) + a.pow(2))) 1
+    else if ((a.pow(2) > b.pow(2) + c.pow(2)) || (b.pow(2) > a.pow(2) + c.pow(2)) || (c.pow(2) > b.pow(2) + a.pow(2))) 2
+    else 0
 }
 
 /**
@@ -172,15 +167,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = if (d >= a && c <= b) {
-    val point1 = if (a > c) {
-        a
-    } else {
-        c
-    }
-    val point2 = if (b > d) {
-        d
-    } else {
-        b
-    }
+    val point1 = max(a, c)
+    val point2 = min(b, d)
     point2 - point1
 } else -1

@@ -2,11 +2,12 @@
 
 package lesson3.task1
 
-import java.lang.Math.abs
 import java.lang.Math.pow
+import kotlin.math.abs
 import kotlin.math.sqrt
 import kotlin.math.pow
 import kotlin.math.roundToInt
+import java.lang.Math.abs as abs1
 
 /**
  * Пример
@@ -74,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var buffer = n
     var count = 1
-    buffer = kotlin.math.abs(buffer)
+    buffer = abs1(buffer)
     while ((buffer / 10) > 0) {
         buffer /= 10
         count++
@@ -248,7 +249,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()
 
 fun fibSequenceDigit(n: Int): Int {
     var result = 0
-    val number: MutableList<Int> = mutableListOf(1, 1)
+    val number = mutableListOf(1, 1)
     var fnum1 = 1
     var fnum2 = 1
     var fnumsum: Int
