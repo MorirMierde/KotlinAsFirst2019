@@ -232,11 +232,18 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    var count = 0
+    var count1 = 0
     words.forEach {
-        if (it == "") count++
+        var count2 = 0
+        if (it == "") count1++
+        for (iter in words) {
+            if (it == iter) {
+                count2++
+            }
+            if (count2==2)return true
+        }
     }
-    if (count > 1) return true
+    if (count1 > 1) return true
     var result: Boolean = false
     words.forEach {
         var buffer = arrayListOf<Char>()
@@ -300,16 +307,25 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
         buffer = buffer.minus(it.key)
         result[it.key] = buffer
     }
+    result.forEach {
+        var buffer: Set<String> = setOf()
+        buffer += it.value
+        for (iter in friends) {
+            if (it.value.contains(iter.key)) buffer += iter.value
+        }
+        buffer = buffer.minus(it.key)
+        result[it.key] = buffer
+    }
     allfriendslist.forEach {
         var flag = false
-        for (iter in result){
-            if (it == iter.key)flag=true
+        for (iter in result) {
+            if (it == iter.key) flag = true
         }
-        if (!flag){
-            result[it]= emptySet()
+        if (!flag) {
+            result[it] = emptySet()
         }
     }
-    
+
     return result
 
 }
