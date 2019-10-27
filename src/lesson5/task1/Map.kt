@@ -232,6 +232,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
+    var count = 0
+    words.forEach {
+        if (it == "") count++
+    }
+    if (count > 1) return true
     var result: Boolean = false
     words.forEach {
         var buffer = arrayListOf<Char>()
@@ -279,27 +284,34 @@ fun hasAnagrams(words: List<String>): Boolean {
  */
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
     var result: MutableMap<String, Set<String>> = friends.toMutableMap()
-    var buffer: Set<String> = setOf()
     var allfriendslist: Set<String> = setOf()
     friends.forEach {
         allfriendslist += it.value
     }
-    for (iter1 in result) {
-        for (iter2 in friends) {
-            if ((iter1 != iter2) && (iter1.value.contains(iter2.key))) {
-                buffer = iter2.value
-                buffer = buffer.minus(iter1.key)
-                iter1.setValue(buffer.plus(iter1.value))
-            }
-        }
+    friends.forEach {
+        if (!allfriendslist.contains(it.key)) allfriendslist += it.key
     }
     friends.forEach {
-        if (allfriendslist.contains(it.key)) allfriendslist = allfriendslist.minus(it.key)
+        var buffer: Set<String> = setOf()
+        buffer += it.value
+        for (iter in friends) {
+            if (it.value.contains(iter.key)) buffer += iter.value
+        }
+        buffer = buffer.minus(it.key)
+        result[it.key] = buffer
     }
     allfriendslist.forEach {
-        result.put(it, emptySet())
+        var flag = false
+        for (iter in result){
+            if (it == iter.key)flag=true
+        }
+        if (!flag){
+            result[it]= emptySet()
+        }
     }
+    
     return result
+
 }
 
 /**

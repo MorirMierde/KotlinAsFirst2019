@@ -235,7 +235,32 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    val number = mutableListOf(1)
+    var count = 2
+    var buffer: Int
+    while (count <= n) {
+        buffer = count * count
+        val buffer1 = mutableListOf<Int>()
+        do {
+
+            buffer1.add(buffer % 10)
+            buffer /= 10
+        } while (buffer != 0)
+        buffer1.reverse()
+        buffer1.forEach {
+            number.add(it)
+        }
+        count++
+    }
+    var result = 0
+    for (iter in number.indices) {
+        if (iter == (n - 1)) {
+            result = number[iter]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
