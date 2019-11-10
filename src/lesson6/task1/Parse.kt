@@ -1,4 +1,6 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "NAME_SHADOWING",
+    "ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE"
+)
 
 package lesson6.task1
 
@@ -69,7 +71,58 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var input = str.split(' ')
+    var result = ""
+    var count = 0
+    var flag2 = false
+    var flag1: Boolean
+    input.forEach {
+        flag1 = false
+        val flag = Regex("""\d+""").matchEntire(it)
+        if (flag != null) {
+            println(it)
+            if (it.length < 2) result += "0"
+            result += it
+            if (count == 0) {
+                result += '.'
+                if (it.toInt() > 31) return ""
+            } else {
+
+                if (it.toInt() % 4 == 0) flag1 = true
+                if (it.toInt() % 100 == 0) flag1 = false
+                if (it.toInt() % 400 == 0) flag1 = true
+
+                if ((!flag1) && (!flag2) && result.contains("29")) return ""
+            }
+        } else {
+            println(it)
+            when (it) {
+                "января" -> result += "01"
+                "февраля" -> result += "02"
+                "марта" -> result += "03"
+                "апреля" -> result += "04"
+                "мая" -> result += "05"
+                "июня" -> result += "06"
+                "июля" -> result += "07"
+                "августа" -> result += "08"
+                "сентября" -> result += "09"
+                "октября" -> result += "10"
+                "ноября" -> result += "11"
+                "декабря" -> result += "12"
+                else -> return ""
+            }
+            if (it.contains("февраля")) flag2 = true
+            result += '.'
+        }
+        count++
+    }
+    if (count != 3) return ""
+    println(result)
+    println(flag2)
+
+    return result
+}
 
 /**
  * Средняя
@@ -109,7 +162,22 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    var jumps = jumps.split(' ')
+    jumps = jumps.filter { !it.contains('%') && !it.contains('-') }
+    val jumps1: List<Int>
+    try {
+        jumps1 = jumps.map { it -> it.toInt() }
+    } catch (e: Exception) {
+        return -1
+    }
+    var max = 0
+    jumps1.forEach {
+        max = maxOf(max, it)
+    }
+    if (max < 1) return -1
+    return max
+}
 
 /**
  * Сложная
@@ -122,7 +190,25 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var jumps = jumps.split(' ')
+    jumps = jumps.filter { !it.contains('%') && !it.contains('-') }
+    var jumps2 = jumps.filter { !it.contains("+") }
+    val jumps1: List<Int>
+    try {
+        jumps1 = jumps2.map { it -> it.toInt() }
+    } catch (e: Exception) {
+        return -1
+    }
+    var max = 0
+    for (iter in jumps.indices) {
+        println(jumps[iter])
+        if (jumps[iter].contains('+')){
+            max = maxOf(max, jumps[iter-1].toInt())
+        }
+    }
+    return max
+}
 
 /**
  * Сложная
@@ -179,7 +265,26 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    println(str)
+    var str = str.split(' ')
+    if (str.size<=1)return -1
+    var buffer = str.map { it -> it.toUpperCase() }.toSet().toList()
+    println("*")
+    var count = 0
+    if (str.size>buffer.size){
+        val changedList = buffer.filterIndexed { i, value -> str[i].toUpperCase() != value}.toString()
+        var buffer1 = buffer.mapIndexed { index, s -> s to index }
+
+        println(buffer1.)
+        println(changedList.toString())
+        return buffer.indexOf(changedList)
+
+    }
+    println(str)
+    println(buffer)
+    return 0
+}
 
 /**
  * Сложная
