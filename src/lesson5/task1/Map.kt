@@ -216,7 +216,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val sort = list.groupBy { it }.iterator()
-    var result: MutableMap<String, Int> = mutableMapOf()
+    val result: MutableMap<String, Int> = mutableMapOf()
     while (sort.hasNext()) {
         val buffer = sort.next()
         if (buffer.value.size > 1) result[buffer.key] = buffer.value.size

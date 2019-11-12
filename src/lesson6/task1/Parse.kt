@@ -1,8 +1,11 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "NAME_SHADOWING",
+@file:Suppress(
+    "UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "NAME_SHADOWING",
     "ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE"
 )
 
 package lesson6.task1
+
+import kotlin.math.absoluteValue
 
 /**
  * Пример
@@ -203,8 +206,8 @@ fun bestHighJump(jumps: String): Int {
     var max = 0
     for (iter in jumps.indices) {
         println(jumps[iter])
-        if (jumps[iter].contains('+')){
-            max = maxOf(max, jumps[iter-1].toInt())
+        if (jumps[iter].contains('+')) {
+            max = maxOf(max, jumps[iter - 1].toInt())
         }
     }
     return max
@@ -251,7 +254,6 @@ fun plusMinus(expression: String): Int {
             sym = it
             query = false
         }
-
     }
     return amount
 }
@@ -265,7 +267,15 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val fff = str.toUpperCase().split(' ').groupBy { it }.mapValues { it.value.size }
+    if (fff.filterValues { it != 1 }.isEmpty()) return -1
+    val buffer = str.split(" ").map { it.toUpperCase() }
+    buffer.forEachIndexed { index, s ->
+        if (s == buffer[index + 1]) return str.toUpperCase().indexOf("$s $s")
+    }
+    return -1
+}
 
 /**
  * Сложная
