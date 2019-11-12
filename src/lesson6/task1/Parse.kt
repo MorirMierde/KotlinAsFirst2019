@@ -272,7 +272,7 @@ fun firstDuplicateIndex(str: String): Int {
     if (fff.filterValues { it != 1 }.isEmpty()) return -1
     val buffer = str.split(" ").map { it.toUpperCase() }
     buffer.forEachIndexed { index, s ->
-        if (s == buffer[index + 1]) return str.toUpperCase().indexOf("$s $s")
+        if (index + 1 < buffer.size && s == buffer[index + 1])return str.toUpperCase().indexOf("$s $s")
     }
     return -1
 }
