@@ -356,8 +356,7 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var words = ""
-    var flag = false
+    var result = ""
     var thousand = 0
     var hundred = 0
     var buf1 = 0
@@ -408,52 +407,75 @@ fun russian(n: Int): String {
         "восемь тысяч ",
         "девять тысяч "
     )
-    hundred = n
-    if (n / 1000 > 0) {
-        thousand = n / 1000
-        if (thousand / 100 > 0) {
-            buf1 = thousand / 100
-            words += map1.get(buf1 - 1)
-            if (thousand % 100 == 0) words += "тысяч "
+
+    println(n)
+    thousand = n / 1000
+    if (thousand != 0) {
+        buf1 = thousand / 100
+        println(buf1)
+        if (buf1 != 0) {
+            result += map1[buf1 - 1]
+            if (thousand - buf1 * 100 == 0) result += "тысяч "
         }
-        if ((thousand % 100 > 10) && (thousand % 100 < 20)) {
-            println()
-            words += map4.get(n % 10 - 1) + "тысяч "
-            flag = true
-        } else if ((thousand - buf1 * 100 - thousand % 10) / 10 > 0) {
-            buf2 = (thousand - buf1 * 100 - thousand % 10) / 10
-            words += map2.get(buf2 - 1)
-            if (thousand % 10 == 0) words += "тысяч "
+        println(result)
+        buf2 = thousand - buf1 * 100
+        println(buf2)
+        println("thousand:  $thousand")
+        if (buf2 in 11..19) {
+            buf2 -= 10
+            println(buf2)
+            result += map4[buf2 - 1] + "тысяч "
+        } else if (buf2 / 10 == 0) {
+            buf2 %= 10
+            println(buf2)
+            if (buf2 != 0) {
+                result += map5[buf2 - 1]
+            }
+        } else {
+            buf2 /= 10
+            println(buf2)
+            result += map2[buf2 - 1]
+            buf3 = thousand - buf1 * 100 - buf2 * 10
+            println(buf3)
+            if (buf3 != 0) {
+                result += map5[buf3 - 1]
+            }
         }
-        if ((thousand % 10 > 0) && (flag == false)) {
-            buf3 = thousand % 10
-            words += map5.get(buf3 - 1)
-        }
-        hundred = n % 1000
     }
-    flag = false
-    if (hundred / 100 > 0) {
+    hundred = n - thousand * 1000
+    if (hundred != 0) {
         buf1 = hundred / 100
-        words += map1[buf1 - 1]
+        println(buf1)
+        if (buf1 != 0) {
+            result += map1[buf1 - 1]
+        }
+        println(result)
+        buf2 = hundred - buf1 * 100
+        println(buf2)
+        println("hundred:  $hundred")
+        if (buf2 in 11..19) {
+            buf2 -= 10
+            println(buf2)
+            result += map4[buf2 - 1]
+        } else if (buf2 / 10 == 0) {
+            buf2 %= 10
+            println(buf2)
+            if (buf2 != 0) {
+                result += map3[buf2 - 1]
+            }
+        } else {
+            buf2 /= 10
+            println(buf2)
+            result += map2[buf2 - 1]
+            buf3 = hundred - buf1 * 100 - buf2 * 10
+            println(buf3)
+            if (buf3 != 0) {
+                result += map3[buf3 - 1]
+            }
+        }
     }
-    if ((hundred % 100 > 10) && (hundred % 100 < 20)) {
-        words += map4[hundred % 10 - 1]
-        flag = true
-    }
-    if (((hundred - buf1 * 100 - hundred % 10) / 10 > 0) && !flag) {
-        println("*")
-        buf2 = (hundred - buf1 * 100 - hundred % 10) / 10
-        words += map2[buf2 - 1]
-    } else if (hundred in 20..99) {
-        buf2 = hundred / 10
-        words += map2[buf2 - 1]
-    }
-    if ((hundred % 10 > 0) && !flag) {
-        buf3 = hundred % 10
-        words += map3[buf3 - 1]
-    }
-    if (words.last() == ' ') {
-        words = words.dropLast(1)
-    }
-    return words
+    if (result.last() == ' ') result = result.dropLast(1)
+    println(hundred)
+    println(thousand)
+    return result
 }
