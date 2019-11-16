@@ -437,8 +437,10 @@ fun russian(n: Int): String {
             result += map2[buf2 - 1]
             buf3 = thousand - buf1 * 100 - buf2 * 10
             println(buf3)
-            if (buf3 != 0) {
-                result += map5[buf3 - 1]
+            result += if (buf3 != 0) {
+                map5[buf3 - 1]
+            } else {
+                "тысяч "
             }
         }
     }
