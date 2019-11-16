@@ -275,15 +275,22 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
     val iter = propagate.iterator()
     result = friends.toMutableMap()
     while (iter.hasNext()) {
+        var buf2: Set<String> = emptySet()
         val person = iter.next()
         if (!result.keys.contains(person)) result[person] = emptySet()
         friends[person]?.forEach {
             if (result[it] != null) {
                 var buf = result[it]
-                val buf1 = result[person]
+                var buf1 = result[person]
                 if (buf != null) {
                     if (buf1 != null) {
+                        buf.forEach { s ->
+                            if (friends.get(s)!= null){
+                                buf2 = friends.get(s)!!
+                            }
+                        }
                         buf += buf1
+                        buf += buf2
                     }
                     result[person] = buf.minus(person).toMutableSet()
                 }
@@ -311,7 +318,16 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var buffer = list.withIndex().map { it.index to it.value }.toMap()
+    var buffer1 = list.withIndex().map { it.index to number - it.value }.toMap()
+    buffer.forEach {
+        var exp = 0
+        if (buffer1[it.value] != null) exp = buffer1.getValue(it.value)
+        if (buffer1.containsValue(it.value) && it.key != buffer1[it.value] && buffer1[it.value] != null) return it.key to exp
+    }
+    return -1 to -1
+}
 
 /**
  * Очень сложная

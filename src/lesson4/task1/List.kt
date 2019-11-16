@@ -407,36 +407,27 @@ fun russian(n: Int): String {
         "восемь тысяч ",
         "девять тысяч "
     )
-
-    println(n)
     thousand = n / 1000
     if (thousand != 0) {
         buf1 = thousand / 100
-        println(buf1)
         if (buf1 != 0) {
             result += map1[buf1 - 1]
             if (thousand - buf1 * 100 == 0) result += "тысяч "
         }
-        println(result)
         buf2 = thousand - buf1 * 100
-        println(buf2)
         println("thousand:  $thousand")
         if (buf2 in 11..19) {
             buf2 -= 10
-            println(buf2)
             result += map4[buf2 - 1] + "тысяч "
         } else if (buf2 / 10 == 0) {
             buf2 %= 10
-            println(buf2)
             if (buf2 != 0) {
                 result += map5[buf2 - 1]
             }
         } else {
             buf2 /= 10
-            println(buf2)
             result += map2[buf2 - 1]
             buf3 = thousand - buf1 * 100 - buf2 * 10
-            println(buf3)
             result += if (buf3 != 0) {
                 map5[buf3 - 1]
             } else {
@@ -447,37 +438,28 @@ fun russian(n: Int): String {
     hundred = n - thousand * 1000
     if (hundred != 0) {
         buf1 = hundred / 100
-        println(buf1)
         if (buf1 != 0) {
             result += map1[buf1 - 1]
         }
-        println(result)
         buf2 = hundred - buf1 * 100
-        println(buf2)
         println("hundred:  $hundred")
         if (buf2 in 11..19) {
             buf2 -= 10
-            println(buf2)
             result += map4[buf2 - 1]
         } else if (buf2 / 10 == 0) {
             buf2 %= 10
-            println(buf2)
             if (buf2 != 0) {
                 result += map3[buf2 - 1]
             }
         } else {
             buf2 /= 10
-            println(buf2)
             result += map2[buf2 - 1]
             buf3 = hundred - buf1 * 100 - buf2 * 10
-            println(buf3)
             if (buf3 != 0) {
                 result += map3[buf3 - 1]
             }
         }
     }
     if (result.last() == ' ') result = result.dropLast(1)
-    println(hundred)
-    println(thousand)
     return result
 }
