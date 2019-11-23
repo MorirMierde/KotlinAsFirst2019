@@ -272,31 +272,30 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
         propagate += it.value
         propagate += it.key
     }
-    val iter = propagate.iterator()
     result = friends.toMutableMap()
-    while (iter.hasNext()) {
-        var buf2: Set<String> = emptySet()
-        val person = iter.next()
-        if (!result.keys.contains(person)) result[person] = emptySet()
-        friends[person]?.forEach {
+    propagate.forEach {
+        var buffer = emptySet<String>()
+        if (!result.keys.contains(it)) result[it] = emptySet()
+        friends[it]?.forEach { s ->
             if (result[it] != null) {
-                var buf = result[it]
-                var buf1 = result[person]
-                if (buf != null) {
-                    if (buf1 != null) {
-                        buf.forEach { s ->
-                            if (friends.get(s)!= null){
-                                buf2 = friends.get(s)!!
-                            }
-                        }
-                        buf += buf1
-                        buf += buf2
-                    }
-                    result[person] = buf.minus(person).toMutableSet()
+                if (result[s] != null) {
+                    buffer += result[s]!!
                 }
-
+                if (result[it] != null) {
+                    buffer += result[it]!!
+                }
             }
         }
+        val iter = buffer.iterator()
+        loop@ while (iter.hasNext()) {
+            var size = buffer.size
+            var prerem1 = iter.next()
+            if (friends[prerem1] != null) {
+                buffer += friends[prerem1]!!
+            }
+            if (buffer.size != size) break@loop
+        }
+        result[it] = buffer.minus(it).toMutableSet()
     }
     return result
 }

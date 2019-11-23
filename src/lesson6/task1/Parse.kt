@@ -74,58 +74,7 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String {
-    var input = str.split(' ')
-    var result = ""
-    var count = 0
-    var flag2 = false
-    var flag1: Boolean
-    input.forEach {
-        flag1 = false
-        val flag = Regex("""\d+""").matchEntire(it)
-        if (flag != null) {
-            println(it)
-            if (it.length < 2) result += "0"
-            result += it
-            if (count == 0) {
-                result += '.'
-                if (it.toInt() > 31) return ""
-            } else {
-
-                if (it.toInt() % 4 == 0) flag1 = true
-                if (it.toInt() % 100 == 0) flag1 = false
-                if (it.toInt() % 400 == 0) flag1 = true
-
-                if ((!flag1) && (!flag2) && result.contains("29")) return ""
-            }
-        } else {
-            println(it)
-            when (it) {
-                "января" -> result += "01"
-                "февраля" -> result += "02"
-                "марта" -> result += "03"
-                "апреля" -> result += "04"
-                "мая" -> result += "05"
-                "июня" -> result += "06"
-                "июля" -> result += "07"
-                "августа" -> result += "08"
-                "сентября" -> result += "09"
-                "октября" -> result += "10"
-                "ноября" -> result += "11"
-                "декабря" -> result += "12"
-                else -> return ""
-            }
-            if (it.contains("февраля")) flag2 = true
-            result += '.'
-        }
-        count++
-    }
-    if (count != 3) return ""
-    println(result)
-    println(flag2)
-
-    return result
-}
+fun dateStrToDigit(str: String): String = TODO()
 
 /**
  * Средняя
@@ -268,8 +217,8 @@ fun plusMinus(expression: String): Int {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val fff = str.toUpperCase().split(' ').groupBy { it }.mapValues { it.value.size }
-    if (fff.filterValues { it != 1 }.isEmpty()) return -1
+    val string = str.toUpperCase().split(' ').groupBy { it }.mapValues { it.value.size }
+    if (string.filterValues { it != 1 }.isEmpty()) return -1
     val buffer = str.split(" ").map { it.toUpperCase() }
     buffer.forEachIndexed { index, s ->
         if (index + 1 < buffer.size && s == buffer[index + 1])return str.toUpperCase().indexOf("$s $s")
