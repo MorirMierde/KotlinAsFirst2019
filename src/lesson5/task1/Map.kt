@@ -327,8 +327,8 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     var buffer1 = list.withIndex().map { it.index to number - it.value }.toMap()
     buffer.forEach {
         var exp = 0
-        if (buffer1[it.value] != null) exp = buffer1.getValue(it.value)
-        if (buffer1.containsValue(it.value) && it.key != buffer1[it.value] && buffer1[it.value] != null) return it.key to exp
+        if (buffer1[it.value] != null && buffer1[it.value] != -1) exp = buffer1.getValue(it.value)
+        if (buffer1.containsValue(it.value) && it.key != buffer1[it.value] && buffer1[it.value] != null && buffer1[it.value] != -1) return it.key to exp
     }
     return -1 to -1
 }
