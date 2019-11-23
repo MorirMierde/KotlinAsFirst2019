@@ -286,16 +286,21 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
                 }
             }
         }
-        val iter = buffer.iterator()
+        var iter = buffer.iterator()
         loop@ while (iter.hasNext()) {
             var size = buffer.size
             var prerem1 = iter.next()
             if (friends[prerem1] != null) {
                 buffer += friends[prerem1]!!
             }
-            if (buffer.size != size) break@loop
+            if (buffer.size != size) {
+                iter = buffer.iterator()
+                continue@loop
+            }
         }
         result[it] = buffer.minus(it).toMutableSet()
+        println(it)
+        println(result[it])
     }
     return result
 }
