@@ -172,21 +172,15 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.isEmpty()) throw IllegalArgumentException()
-    var expression = expression.split(' ')
-    var symbol: List<Char> = listOf(' ', '+', '-')
-    var amount = 0
-    symbol.forEach {
-        if ((expression.get(0).toInt() < 0) || (expression.get(0).contains(it))) throw IllegalArgumentException()
-        else {
-            amount = expression.first().toInt()
-        }
-    }
+    val sample = "(\\d+(\\s[+|-]\\s)|(\\d+\$))+".toRegex()
+    require(sample.matches(expression) && expression.isNotEmpty())
+    var string = expression.split(' ')
     var buffer = 0
+    var amount = string[0].toInt()
     var sym = ""
     var flag = false
     var query = true
-    expression.forEach {
+    string.forEach {
         if (!flag) {
             flag = true
             return@forEach
@@ -198,12 +192,15 @@ fun plusMinus(expression: String): Int {
             if (sym == "+") amount += buffer
             if (sym == "-") amount -= buffer
             query = true
+            println("buffer     $buffer")
+            println("amount     $amount")
         } else {
-
             sym = it
+            println(sym)
             query = false
         }
     }
+    println("всего:    $amount")
     return amount
 }
 
@@ -221,7 +218,7 @@ fun firstDuplicateIndex(str: String): Int {
     if (string.filterValues { it != 1 }.isEmpty()) return -1
     val buffer = str.split(" ").map { it.toUpperCase() }
     buffer.forEachIndexed { index, s ->
-        if (index + 1 < buffer.size && s == buffer[index + 1])return str.toUpperCase().indexOf("$s $s")
+        if (index + 1 < buffer.size && s == buffer[index + 1]) return str.toUpperCase().indexOf("$s $s")
     }
     return -1
 }
