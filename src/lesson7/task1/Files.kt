@@ -446,6 +446,18 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     println(rhv)
     val outputStream = File(outputName).bufferedWriter()
     outputStream.write(" $lhv | $rhv")
+    if (lhv == rhv) {
+        println("55")
+        outputStream.newLine()
+        outputStream.write("-$lhv   1")
+        outputStream.newLine()
+        outputStream.write("--")
+        outputStream.newLine()
+        outputStream.write(" 0")
+        outputStream.close()
+        return
+    }
+
     if (lhv < rhv) {
         outputStream.newLine()
         outputStream.write("-0   0")
@@ -454,15 +466,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         outputStream.newLine()
         outputStream.write(" $lhv")
         outputStream.close()
-    } else if (lhv == rhv) {
-        outputStream.newLine()
-        outputStream.write("-$lhv   1")
-        outputStream.newLine()
-        outputStream.write("--")
-        outputStream.newLine()
-        outputStream.write(" 0")
-        outputStream.close()
     }
+
     var longstr = lhv.toString().length + 4
     println("longstr       $longstr")
     var number = mutableListOf<Int>()
