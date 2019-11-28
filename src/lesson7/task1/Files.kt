@@ -471,6 +471,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var resulted = 0
     var answer = mutableListOf<String>()
     number = number.reversed().toMutableList()
+    println(number)
     for (iter in number.indices) {
         println("iter       ${number[iter]}")
         if (number[iter] <= rhv) {
@@ -525,8 +526,15 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
                 }
                 answer.add(strwrite)
             } else {
-                answer.add("-${number[iter]}")
-                if (iter < number.size - 1) answer.add("0${number[iter + 1]}")
+                println("=========================")
+                val buf2 = lhv % rhv
+                println("buf2        $buf2")
+                if (buf2 != 0) {
+                    answer.add("-${lhv - buf2}")
+                } else {
+                    answer.add("-${number[iter]}")
+                    if (iter < number.size - 1) answer.add("0${number[iter + 1]}")
+                }
                 result *= 10
                 result += number[iter]
             }
@@ -540,12 +548,16 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (num == 0) {
             spacecount = longstr - answer[num].length
             outputStream.newLine()
+            if(lhv % rhv != 0)result = lhv / rhv
             outputStream.write(answer[num] + " ".repeat(spacecount) + result)
             outputStream.newLine()
             outputStream.write("-".repeat(answer[num].length))
             spacecount = answer[num].length - 1
             println(spacecount)
-            if (answer.size == 1){
+            if (answer.size == 1 && lhv % rhv != 0) {
+                outputStream.newLine()
+                outputStream.write(" ".repeat(spacecount) + (lhv % rhv))
+            }else  if (answer.size == 1){
                 outputStream.newLine()
                 outputStream.write(" ".repeat(spacecount) + difference.toString())
             }
