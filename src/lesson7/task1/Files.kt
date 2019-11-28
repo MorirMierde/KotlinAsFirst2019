@@ -446,17 +446,6 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     println(rhv)
     val outputStream = File(outputName).bufferedWriter()
     outputStream.write(" $lhv | $rhv")
-    if (lhv == rhv) {
-        println("55")
-        outputStream.newLine()
-        outputStream.write("-$lhv   1")
-        outputStream.newLine()
-        outputStream.write("--")
-        outputStream.newLine()
-        outputStream.write(" 0")
-        outputStream.close()
-        return
-    }
 
     if (lhv < rhv) {
         outputStream.newLine()
@@ -556,7 +545,10 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             outputStream.write("-".repeat(answer[num].length))
             spacecount = answer[num].length - 1
             println(spacecount)
-
+            if (answer.size == 1){
+                outputStream.newLine()
+                outputStream.write(" ".repeat(spacecount) + difference.toString())
+            }
         } else if (num == answer.size - 1) {
             if (answer[num].length > answer[num - 1].length) spacecount -= 1
             outputStream.newLine()
