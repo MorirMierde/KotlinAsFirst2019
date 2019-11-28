@@ -548,7 +548,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (num == 0) {
             spacecount = longstr - answer[num].length
             outputStream.newLine()
-            if(lhv % rhv != 0)result = lhv / rhv
+            if (lhv % rhv != 0) result = lhv / rhv
             outputStream.write(answer[num] + " ".repeat(spacecount) + result)
             outputStream.newLine()
             outputStream.write("-".repeat(answer[num].length))
@@ -557,12 +557,13 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             if (answer.size == 1 && lhv % rhv != 0) {
                 outputStream.newLine()
                 outputStream.write(" ".repeat(spacecount) + (lhv % rhv))
-            }else  if (answer.size == 1){
+            } else if (answer.size == 1) {
                 outputStream.newLine()
                 outputStream.write(" ".repeat(spacecount) + difference.toString())
             }
         } else if (num == answer.size - 1) {
             if (answer[num].length > answer[num - 1].length) spacecount -= 1
+
             outputStream.newLine()
             outputStream.write(" ".repeat(spacecount) + answer[num])
             outputStream.newLine()
@@ -571,6 +572,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             spacecount += answer[num].length - 1
             outputStream.write(" ".repeat(spacecount) + difference.toString())
         } else {
+            if (answer[num]=="0") answer[num]="00"
             outputStream.newLine()
             outputStream.write(" ".repeat(spacecount) + answer[num])
             if (answer[num].contains('-') && answer[num].length > answer[num - 1].length && spacecount > 0) {
