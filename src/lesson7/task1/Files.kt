@@ -148,25 +148,34 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             outputStream.newLine()
         } else {
             var wordcharcount = 0// часть строки занятая символами
-            val spacecount = line.trim().split(' ').size - 1//число промежутков между словами
+            val spacecount = line.trim().split(' ').filter { it != "" }.size - 1//число промежутков между словами
             if (spacecount != 0) {
                 var buffer = 0
-                for (word in line.trim().split(' ')) {
+                for (word in line.trim().split(' ').filter { it != "" }) {
                     wordcharcount += word.length
                 }
                 val space = maximum - wordcharcount//общая масса пробелов
                 val spaceunit = space / spacecount
                 var balance = space - spaceunit * spacecount
                 var string = ""
-                for (word in line.trim().split(' ')) {
-                    string += word
-                    string += if (balance > 0) {
-                        " ".repeat(spaceunit + 1)
-                    } else {
-                        " ".repeat(spaceunit)
+                if (balance != 0) {
+                    for (word in line.trim().split(' ').filter { it != "" }) {
+                        string += word
+                        string += if (balance > 0) {
+                            " ".repeat(spaceunit)
+                        } else {
+                            " ".repeat(spaceunit + 1)
+                        }
+                        balance--
                     }
-                    balance--
+                } else {
+                    for (word in line.trim().split(' ').filter { it != "" }) {
+                        string += word
+                        string += " ".repeat(spaceunit)
+                    }
                 }
+
+
                 outputStream.write(string.trim())
                 outputStream.newLine()
             } else {
