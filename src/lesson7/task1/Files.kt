@@ -444,15 +444,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
     var longspace = " $lhv | ".length
-    outputStream.write(" $lhv | $rhv")
-    if (rhv > lhv){
-        outputStream.newLine()
-        outputStream.write("-0" + " ".repeat(longspace-2) + "0")
-        outputStream.newLine()
-        outputStream.write("--")
-        outputStream.newLine()
-        outputStream.write(" $lhv")
-    }
+
     var number = mutableListOf<Int>()
     var buf = lhv
     var result = 0
@@ -464,6 +456,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var resulted = 0
     var answer = mutableListOf<String>()
     number = number.reversed().toMutableList()
+
     var flag = false
     for (iter in number) {
         difference = difference * 10 + iter
@@ -506,6 +499,22 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     answer = answer.reversed().dropLast(1).reversed().toMutableList()
     var shortspace = 0
+    if (answer.size == 1 && answer.first().length == lhv.toString().length) {
+        outputStream.write("$lhv | $rhv")
+        longspace -= 1
+    } else {
+        outputStream.write(" $lhv | $rhv")
+    }
+    if (rhv > lhv) {
+        outputStream.newLine()
+        outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
+        outputStream.newLine()
+        outputStream.write("--")
+        outputStream.newLine()
+        outputStream.write(" $lhv")
+    }
+    println(answer)
+
     for (iter in answer.indices) {
         if (iter == 0) {
             outputStream.newLine()
