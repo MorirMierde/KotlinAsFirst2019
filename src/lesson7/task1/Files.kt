@@ -510,10 +510,13 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     if (rhv > lhv) {
         if (rhv.toString().length >= lhv.toString().length && lhv.toString().length > 1) {
+            var specialspace = lhv.toString().length - 2
+            println(specialspace)
             outputStream.newLine()
-            outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
+            if (specialspace > 0) outputStream.write(" ".repeat(specialspace) + "-0   0")
+            else outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
             outputStream.newLine()
-            outputStream.write("--")
+            if (specialspace > 0) outputStream.write("--" + "-".repeat(specialspace)) else outputStream.write("--")
             outputStream.newLine()
             outputStream.write("$lhv")
         } else {
