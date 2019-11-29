@@ -162,9 +162,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                     for (word in line.trim().split(' ').filter { it != "" }) {
                         string += word
                         string += if (balance > 0) {
-                            " ".repeat(spaceunit)
-                        } else {
                             " ".repeat(spaceunit + 1)
+                        } else {
+                            " ".repeat(spaceunit)
                         }
                         balance--
                     }
@@ -174,8 +174,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                         string += " ".repeat(spaceunit)
                     }
                 }
-
-
                 outputStream.write(string.trim())
                 outputStream.newLine()
             } else {
@@ -185,7 +183,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 } else {
                     outputStream.newLine()
                 }
-
             }
         }
     }
