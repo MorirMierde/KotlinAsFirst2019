@@ -555,6 +555,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             }
         }
         if (iter == answer.size - 1) {
+            if (answer.size == 1 && answer[iter].length > lhv.toString().length) shortspace = answer[iter].length - difference.toString().length
             if (iter != 0 && answer[iter - 1] == "00") shortspace += 1
             outputStream.newLine()
             outputStream.write(" ".repeat(shortspace) + difference)
