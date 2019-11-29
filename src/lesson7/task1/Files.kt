@@ -417,7 +417,47 @@ fun markdownToHtml(inputName: String, outputName: String) {
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+
+    val outputStream = File(outputName).bufferedWriter()
+    var answer = mutableListOf<String>()
+    var sum = 0
+    var buffer = mutableListOf<Int>()
+    var buf = rhv
+    while (buf != 0) {
+        buffer.add(buf % 10)
+        buf /= 10
+    }
+    var k = 1
+    buffer.forEach {
+        answer.add((lhv * it).toString())
+        sum += lhv * it * k
+        k *= 10
+    }
+    var long = sum.toString().length + 1
+    outputStream.write(" ".repeat(long - lhv.toString().length) + lhv)
+    outputStream.newLine()
+    outputStream.write("*" + " ".repeat(long - rhv.toString().length - 1) + rhv)
+    outputStream.newLine()
+    outputStream.write("-".repeat(long))
+    outputStream.newLine()
+    for (iter in answer.indices) {
+        if (iter == 0) outputStream.write(" ".repeat(long - answer[iter].length) + answer[iter])
+        else{
+            val space = long - answer[iter].length - 1
+            println(space)
+            outputStream.newLine()
+            outputStream.write("+" + " ".repeat(space - iter) + answer[iter])
+        }
+    }
+    outputStream.newLine()
+    outputStream.write("-".repeat(long))
+    outputStream.newLine()
+    outputStream.write(" $sum")
+    println(long)
+    println(buffer)
+    println(answer)
+    println(sum)
+    outputStream.close()
 }
 
 
@@ -442,6 +482,8 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
+    TODO()
+/*
     val outputStream = File(outputName).bufferedWriter()
     var longspace = " $lhv | ".length
 
@@ -456,7 +498,6 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var resulted = 0
     var answer = mutableListOf<String>()
     number = number.reversed().toMutableList()
-
     var flag = false
     for (iter in number) {
         difference = difference * 10 + iter
@@ -499,14 +540,18 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     answer = answer.reversed().dropLast(1).reversed().toMutableList()
     var shortspace = 0
+    var strlhg = 0
     if (answer.size == 1 && answer.first().length == lhv.toString().length) {
         outputStream.write("$lhv | $rhv")
         longspace -= 1
+        strlhg = "$lhv".length
     } else if (rhv.toString().length >= lhv.toString().length && lhv.toString().length > 1 && rhv > lhv) {
         outputStream.write("$lhv | $rhv")
         longspace -= 1
+        strlhg = "$lhv".length
     } else {
         outputStream.write(" $lhv | $rhv")
+        strlhg = " $lhv".length
     }
     if (rhv > lhv) {
         if (rhv.toString().length >= lhv.toString().length && lhv.toString().length > 1) {
@@ -539,29 +584,46 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             outputStream.write("-".repeat(answer[iter].length))
             shortspace = answer[iter].length - 1
         } else {
+            println(shortspace)
+            println(strlhg)
+            if (shortspace + answer[iter].length > strlhg) {
+                println("*************************")
+                shortspace = strlhg - 2
+            }
             if (answer[iter].contains('-') && answer[iter].length > answer[iter - 1].length) shortspace -= 1
             outputStream.newLine()
             outputStream.write(" ".repeat(shortspace) + answer[iter])
             if (answer[iter].contains('-') && answer[iter].length > answer[iter - 1].length) shortspace += 1
             if (answer[iter].contains('-')) {
+
                 if (!answer[iter].contains("-0") && answer[iter].length > answer[iter - 1].length) {
                     shortspace -= 1
                 }
                 outputStream.newLine()
                 outputStream.write(" ".repeat(shortspace) + "-".repeat(answer[iter].length))
                 if (!answer[iter].contains("-0")) {
-                    shortspace += answer[iter].length - 1
+                    shortspace += answer[iter - 1].length - 1
+                    if (shortspace > strlhg - 1) {
+                        shortspace = strlhg - 1
+                    }
                 }
             }
         }
         if (iter == answer.size - 1) {
-            if (answer.size == 1 && answer[iter].length > lhv.toString().length) shortspace = answer[iter].length - difference.toString().length
+
+            if (answer.size == 1 && answer[iter].length > lhv.toString().length) {
+                shortspace = answer[iter].length - difference.toString().length - 1
+            }
             if (iter != 0 && answer[iter - 1] == "00") shortspace += 1
             outputStream.newLine()
-            outputStream.write(" ".repeat(shortspace) + difference)
+            println()
+            if (shortspace >= strlhg - 2) {
+                shortspace = strlhg - 2
+            }
+            outputStream.write(" ".repeat(shortspace + 1) + difference)
         }
 
     }
-    outputStream.close()
+    outputStream.close()*/
 }
 
