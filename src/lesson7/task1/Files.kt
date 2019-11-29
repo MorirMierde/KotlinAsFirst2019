@@ -502,16 +502,28 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     if (answer.size == 1 && answer.first().length == lhv.toString().length) {
         outputStream.write("$lhv | $rhv")
         longspace -= 1
+    } else if (rhv.toString().length == lhv.toString().length && lhv.toString().length > 1 && rhv > lhv) {
+        outputStream.write("$lhv | $rhv")
+        longspace -= 1
     } else {
         outputStream.write(" $lhv | $rhv")
     }
     if (rhv > lhv) {
-        outputStream.newLine()
-        outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
-        outputStream.newLine()
-        outputStream.write("--")
-        outputStream.newLine()
-        outputStream.write(" $lhv")
+        if (rhv.toString().length == lhv.toString().length && lhv.toString().length > 1) {
+            outputStream.newLine()
+            outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
+            outputStream.newLine()
+            outputStream.write("--")
+            outputStream.newLine()
+            outputStream.write("$lhv")
+        } else {
+            outputStream.newLine()
+            outputStream.write("-0" + " ".repeat(longspace - 2) + "0")
+            outputStream.newLine()
+            outputStream.write("--")
+            outputStream.newLine()
+            outputStream.write(" $lhv")
+        }
     }
     println(answer)
 
