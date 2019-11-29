@@ -442,23 +442,17 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    println(lhv)
-    println(rhv)
     val outputStream = File(outputName).bufferedWriter()
+    var longspace = " $lhv | ".length
     outputStream.write(" $lhv | $rhv")
-
-    if (lhv < rhv) {
+    if (rhv > lhv){
         outputStream.newLine()
-        outputStream.write("-0   0")
+        outputStream.write("-0" + " ".repeat(longspace-2) + "0")
         outputStream.newLine()
         outputStream.write("--")
         outputStream.newLine()
         outputStream.write(" $lhv")
-        outputStream.close()
     }
-
-    var longstr = lhv.toString().length + 4
-    println("longstr       $longstr")
     var number = mutableListOf<Int>()
     var buf = lhv
     var result = 0
@@ -466,127 +460,82 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         number.add(buf % 10)
         buf /= 10
     }
-    println(number)
     var difference = 0
     var resulted = 0
     var answer = mutableListOf<String>()
     number = number.reversed().toMutableList()
-    println(number)
-    for (iter in number.indices) {
-        println("iter       ${number[iter]}")
-        if (number[iter] <= rhv) {
-            println("difference   $difference")
-            difference = difference * 10 + number[iter]
-            println("difference   $difference")
-            if (difference >= rhv) {
-                val buf1 = difference / rhv
-                var strwrite = ""
-                strwrite = if (difference <= 0) {
-                    (buf1 * rhv).toString()
+    var flag = false
+    for (iter in number) {
+        difference = difference * 10 + iter
+        if (difference < rhv) {
+            if (flag) {
+                if (difference < 10) {
+                    answer.add("0$difference")
                 } else {
-                    '-' + (buf1 * rhv).toString()
+                    answer.add("$difference")
                 }
-                //var spacecount = longstr - strwrite.length
-                println("buf1         $buf1")
-                if (answer.isNotEmpty()) {
-                    answer.add(difference.toString())
-                }
-                difference -= buf1 * rhv
-                result += buf1
-                println("difference   $difference")
-
-                answer.add(strwrite)
-                //if (iter == 0) println(strwrite + " ".repeat(spacecount))
-
-            } else {
-                if (answer.isNotEmpty()) {
-                    answer.add(difference.toString())
-                    answer.add("-0")
-                }
+                answer.add("-0")
             }
-            println("result      $result")
-            println("iterator    $iter")
-            println("size        ${number.size}")
-            if (iter != number.size - 1) result *= 10
-            println("result      $result")
-        } else {
-            val buf1 = difference / rhv
-            if (buf1 != 0) {
-                println("buf1         $buf1")
-                difference -= buf1 * rhv + number[iter]
-                println("difference   $difference")
-                println("result      $result")
-                result += buf1
-                println("result      $result")
-                var strwrite = ""
-                strwrite = if (difference >= 0) {
-                    '-' + (buf1 * rhv).toString()
-                } else {
-                    (buf1 * rhv).toString()
-                }
-                answer.add(strwrite)
+            result *= 10
+        }
+        if (difference == rhv) {
+            if (rhv < 10) {
+                answer.add("0$rhv")
             } else {
-                println("=========================")
-                val buf2 = lhv % rhv
-                println("buf2        $buf2")
-                if (buf2 != 0) {
-                    answer.add("-${lhv - buf2}")
-                } else {
-                    answer.add("-${number[iter]}")
-                    if (iter < number.size - 1) answer.add("0${number[iter + 1]}")
-                }
-                result *= 10
-                result += number[iter]
+                answer.add("$rhv")
             }
-
+            answer.add("-$rhv")
+            difference = 0
+            result *= 10
+            result += 1
+            flag = true
+        }
+        if (difference > rhv) {
+            if (difference < 10) {
+                answer.add("0$difference")
+            } else {
+                answer.add("$difference")
+            }
+            buf = difference / rhv
+            answer.add("-${rhv * buf}")
+            difference -= buf * rhv
+            result *= 10
+            result += buf
+            flag = true
         }
     }
-    println(answer)
-    println("$lhv | $rhv")
-    var spacecount = 0
-    for (num in answer.indices) {
-        if (num == 0) {
-            spacecount = longstr - answer[num].length
+    answer = answer.reversed().dropLast(1).reversed().toMutableList()
+    var shortspace = 0
+    for (iter in answer.indices) {
+        if (iter == 0) {
             outputStream.newLine()
-            if (lhv % rhv != 0) result = lhv / rhv
-            outputStream.write(answer[num] + " ".repeat(spacecount) + result)
+            longspace -= answer[iter].length
+            outputStream.write(answer[iter] + " ".repeat(longspace) + result)
             outputStream.newLine()
-            outputStream.write("-".repeat(answer[num].length))
-            spacecount = answer[num].length - 1
-            println(spacecount)
-            if (answer.size == 1 && lhv % rhv != 0) {
-                outputStream.newLine()
-                outputStream.write(" ".repeat(spacecount) + (lhv % rhv))
-            } else if (answer.size == 1) {
-                outputStream.newLine()
-                outputStream.write(" ".repeat(spacecount) + difference.toString())
-            }
-        } else if (num == answer.size - 1) {
-            if (answer[num].length > answer[num - 1].length) spacecount -= 1
-
-            outputStream.newLine()
-            outputStream.write(" ".repeat(spacecount) + answer[num])
-            outputStream.newLine()
-            outputStream.write(" ".repeat(spacecount) + "-".repeat(answer[num].length))
-            outputStream.newLine()
-            spacecount += answer[num].length - 1
-            outputStream.write(" ".repeat(spacecount) + difference.toString())
+            outputStream.write("-".repeat(answer[iter].length))
+            shortspace = answer[iter].length - 1
         } else {
-            if (answer[num]=="0") answer[num]="00"
+            if (answer[iter].contains('-') && answer[iter].length > answer[iter - 1].length) shortspace -= 1
             outputStream.newLine()
-            outputStream.write(" ".repeat(spacecount) + answer[num])
-            if (answer[num].contains('-') && answer[num].length > answer[num - 1].length && spacecount > 0) {
-                spacecount -= 1
+            outputStream.write(" ".repeat(shortspace) + answer[iter])
+            if (answer[iter].contains('-') && answer[iter].length > answer[iter - 1].length) shortspace += 1
+            if (answer[iter].contains('-')) {
+                if (!answer[iter].contains("-0") && answer[iter].length > answer[iter - 1].length) {
+                    shortspace -= 1
+                }
                 outputStream.newLine()
-                outputStream.write(" ".repeat(spacecount) + "-".repeat(answer[num].length))
-            } else if (answer[num].contains('-')) {
-                outputStream.newLine()
-                outputStream.write(" ".repeat(spacecount) + "-".repeat(answer[num].length))
-            }
-            if (answer[num - 1].first() == '0') {
-                spacecount += 1
+                outputStream.write(" ".repeat(shortspace) + "-".repeat(answer[iter].length))
+                if (!answer[iter].contains("-0")) {
+                    shortspace += answer[iter].length - 1
+                }
             }
         }
+        if (iter == answer.size - 1) {
+            if (iter != 0 && answer[iter - 1] == "00") shortspace += 1
+            outputStream.newLine()
+            outputStream.write(" ".repeat(shortspace) + difference)
+        }
+
     }
     outputStream.close()
 }
