@@ -137,7 +137,50 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    var maximum = 0
+    for (line in File(inputName).readLines()) {
+        if (line.trim().length > maximum) maximum = line.trim().length
+    }
+    for (line in File(inputName).readLines()) {
+        if (line.trim().length == maximum) {
+            outputStream.write(line.trim())
+            outputStream.newLine()
+        } else {
+            var wordcharcount = 0// часть строки занятая символами
+            val spacecount = line.trim().split(' ').size - 1//число промежутков между словами
+            if (spacecount != 0) {
+                var buffer = 0
+                for (word in line.trim().split(' ')) {
+                    wordcharcount += word.length
+                }
+                val space = maximum - wordcharcount//общая масса пробелов
+                val spaceunit = space / spacecount
+                var balance = space - spaceunit * spacecount
+                var string = ""
+                for (word in line.trim().split(' ')) {
+                    string += word
+                    string += if (balance > 0) {
+                        " ".repeat(spaceunit + 1)
+                    } else {
+                        " ".repeat(spaceunit)
+                    }
+                    balance--
+                }
+                outputStream.write(string.trim())
+                outputStream.newLine()
+            } else {
+                if (line.trim().isNotEmpty()) {
+                    outputStream.write(line.trim())
+                    outputStream.newLine()
+                } else {
+                    outputStream.newLine()
+                }
+
+            }
+        }
+    }
+    outputStream.close()
 }
 
 /**
@@ -442,7 +485,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     outputStream.newLine()
     for (iter in answer.indices) {
         if (iter == 0) outputStream.write(" ".repeat(long - answer[iter].length) + answer[iter])
-        else{
+        else {
             val space = long - answer[iter].length - 1
             println(space)
             outputStream.newLine()
