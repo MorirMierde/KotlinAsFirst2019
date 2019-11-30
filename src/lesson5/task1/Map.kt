@@ -217,11 +217,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    val sort = list.groupBy { it }.iterator()
+    val sort = list.groupBy { it }
     val result: MutableMap<String, Int> = mutableMapOf()
-    while (sort.hasNext()) {
-        val buffer = sort.next()
-        if (buffer.value.size > 1) result[buffer.key] = buffer.value.size
+    for (iter in sort){
+        if (iter.value.size > 1) result[iter.key] = iter.value.size
     }
     return result
 }
@@ -236,10 +235,8 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    val buffer = words.map { it.toSet().sorted() }.groupBy { it }.iterator()
-    while (buffer.hasNext()) {
-        if (buffer.next().value.size > 1) return true
-    }
+    val buffer = words.map { it.toSet().sorted() }.groupBy { it }
+    for (iter in buffer) if (iter.value.size > 1) return true
     return false
 }
 

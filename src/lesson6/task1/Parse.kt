@@ -145,7 +145,7 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     var jumps = jumps.split(' ')
     jumps = jumps.filter { !it.contains('%') && !it.contains('-') }
-    var jumps2 = jumps.filter { !it.contains("+") }
+    val jumps2 = jumps.filter { !it.contains("+") }
     val jumps1: List<Int>
     try {
         jumps1 = jumps2.map { it -> it.toInt() }
@@ -174,7 +174,7 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     val sample = "(\\d+(\\s[+|-]\\s)|(\\d+\$))+".toRegex()
     require(sample.matches(expression) && expression.isNotEmpty())
-    var string = expression.split(' ')
+    val string = expression.split(' ')
     var buffer = 0
     var amount = string[0].toInt()
     var sym = ""
@@ -236,16 +236,16 @@ fun firstDuplicateIndex(str: String): Int {
  */
 fun mostExpensive(description: String): String {
     var result: String = ""
-    var menu: MutableList<List<String>> = mutableListOf()
+    val menu: MutableList<List<String>> = mutableListOf()
     var max: Double = 0.0
     var items = description.split("; ")
     if (items.isEmpty()) items = listOf(description)
     items.forEach {
-        var buffer = it.split(' ')
+        val buffer = it.split(' ')
         menu.add(buffer)
     }
     menu.forEach {
-        var price = it.last().toDoubleOrNull()
+        val price = it.last().toDoubleOrNull()
         if ((price != null) && (price!! > max)) {
             max = price
             result = it.first()
