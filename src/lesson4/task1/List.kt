@@ -7,6 +7,23 @@ import java.lang.Math.pow
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+fun myFun(text: String): String {
+    if (text.contains(Regex("[^a-zA-Z-0-9]"))) return ""
+    return text.toUpperCase().map {
+        when (it) {
+            'A', 'B', 'C' -> '2'
+            'D', 'E', 'F' -> '3'
+            'G', 'H', 'I' -> '4'
+            'J', 'K', 'L' -> '5'
+            'M', 'N', 'O' -> '6'
+            'P', 'Q', 'R', 'S' -> '7'
+            'T', 'U', 'V' -> '8'
+            'W', 'X', 'Y', 'Z' -> '9'
+            else -> it
+        }
+    }.joinToString(separator = "")
+}
+
 /**
  * Пример
  *
