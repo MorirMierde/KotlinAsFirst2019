@@ -41,32 +41,44 @@ interface Matrix<E> {
  * height = высота, width = ширина, e = чем заполнить элементы.
  * Бросить исключение IllegalArgumentException, если height или width <= 0.
  */
-fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
+fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
+    require(!(height <= 0 || width <= 0))
+    return MatrixImpl(height, width, e)
+}
 
 /**
  * Средняя сложность
  *
  * Реализация интерфейса "матрица"
  */
-class MatrixImpl<E> : Matrix<E> {
-    override val height: Int = TODO()
+class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
+    private val unit = MutableList(height) { MutableList(width) { e } }
 
-    override val width: Int = TODO()
+    override fun get(row: Int, column: Int): E = unit[row][column]
 
-    override fun get(row: Int, column: Int): E = TODO()
-
-    override fun get(cell: Cell): E = TODO()
+    override fun get(cell: Cell): E = unit[cell.row][cell.column]
 
     override fun set(row: Int, column: Int, value: E) {
-        TODO()
+        unit[row][column] = value
     }
 
     override fun set(cell: Cell, value: E) {
-        TODO()
+        unit[cell.row][cell.column] = value
     }
 
-    override fun equals(other: Any?) = TODO()
+    override fun equals(other: Any?) = other is MatrixImpl<*> && other.unit == unit
 
-    override fun toString(): String = TODO()
+    override fun toString(): String {
+        var buffer = ""
+        for (iter in unit) {
+            for (iter1 in iter.indices) {
+                if (iter1 != iter.size - 1) buffer += "${iter[iter1]}/t"
+                else buffer += iter[iter1]
+            }
+            buffer += "/n"
+        }
+        buffer.dropLast(3)
+        return buffer
+    }
 }
 
